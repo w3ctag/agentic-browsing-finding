@@ -2,13 +2,13 @@
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Your Spec Title</title>
+  <title>Agentic Browsing and Web Architecture</title>
   <meta content="DRAFT-FINDING" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/base.css" rel="stylesheet">
   <meta content="Bikeshed version ea4009a02, updated Thu Sep 17 15:24:44 2026 -0700" name="generator">
-  <link href="https://w3ctag.github.io/repo-name/" rel="canonical">
+  <link href="https://w3ctag.github.io/agentic-browsing-finding/" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="34cb5922f37ddcae0868dca4b4f11b9cbea91c4a" name="revision">
+  <meta content="85a8489f1d4820f542915f26a2c5fd5b17452ee4" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -422,19 +422,21 @@ dfn > a.self-link::before      { content: "#"; }
     <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
 </a>
 </p>
-   <h1 class="no-ref p-name" id="title">Your Spec Title</h1>
+   <h1 class="no-ref p-name" id="title">Agentic Browsing and Web Architecture</h1>
    <p id="w3c-state"><a href="https://tag.w3.org/findings/">Draft Finding of the TAG</a>,
-    <time class="dt-updated" datetime="2026-10-06">6 October 2026</time></p>
+    <time class="dt-updated" datetime="2026-10-08">8 October 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
      <dl>
       <dt>This version:
-      <dd><a class="u-url" href="https://w3ctag.github.io/repo-name/">https://w3ctag.github.io/repo-name/</a>
+      <dd><a class="u-url" href="https://w3ctag.github.io/agentic-browsing-finding/">https://w3ctag.github.io/agentic-browsing-finding/</a>
       <dt>Issue Tracking:
-      <dd><a href="https://github.com/w3ctag/repo-name/issues/">GitHub</a>
-      <dt class="editor">Editor:
-      <dd class="editor h-card p-author vcard"><a class="fn p-name u-url url" href="http://example.com/your-personal-website">Your Name</a> (<a class="org p-org" href="http://example.com/your-company">Your Company</a>) <a class="email u-email" href="mailto:your-email@example.com">your-email@example.com</a>
+      <dd><a href="https://github.com/w3ctag/agentic-browsing-finding/issues/">GitHub</a>
+      <dt class="editor">Editors:
+      <dd class="editor h-card p-author vcard"><span class="fn p-name"></span>
+      <dd class="editor h-card p-author vcard"><a class="fn p-name u-url url" href="https://toreini.github.io">Ehsan Toreini</a> (<span class="org p-org">Samsung Electronics</span>) <a class="email u-email" href="mailto:e.toreini@samsung.com">e.toreini@samsung.com</a>
+      <dd class="editor h-card p-author vcard"><a class="fn p-name u-url url" href="https://christianliebel.com">Christian Liebel</a> (<a class="org p-org" href="https://thinktecture.com">Thinktecture AG</a>) <a class="email u-email" href="mailto:christian.liebel@thinktecture.com">christian.liebel@thinktecture.com</a>
      </dl>
     </div>
    </details>
@@ -445,7 +447,7 @@ dfn > a.self-link::before      { content: "#"; }
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="heading no-num no-ref no-toc settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>A short description of your spec, one or two sentences.</p>
+   <p>Agentic browsing is becoming increasingly popular, and agentic browsers and browser extensions ship regularly. While they improve the user experience, they also raise security and privacy considerations, which this Finding sets out.</p>
   </div>
   <h2 class="heading no-num no-ref no-toc settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
@@ -467,9 +469,9 @@ dfn > a.self-link::before      { content: "#"; }
   </p>
    <p>
     Feedback and comments on this document are welcome. Please
-    <a href="https://github.com/w3ctag/repo-name/issues">file an issue</a>
+    <a href="https://github.com/w3ctag/agentic-browsing-finding/issues">file an issue</a>
     in this document’s
-    <a href="https://github.com/w3ctag/repo-name/">GitHub repository</a>.
+    <a href="https://github.com/w3ctag/agentic-browsing-finding/">GitHub repository</a>.
   </p>
    <p>
     This document is governed by the <a href="https://www.w3.org/policies/process/20250818/" id="w3c_process_revision">18 August 2025 W3C
@@ -481,10 +483,87 @@ dfn > a.self-link::before      { content: "#"; }
    <h2 class="no-num no-ref no-toc" id="contents">Table of Contents</h2>
    <ol class="toc">
     <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
+    <li><a href="#same-origin-policy"><span class="secno">2</span> <span class="content">Same-Origin Policy and Cross-Origin Data Flows</span></a>
+    <li><a href="#identity-delegation"><span class="secno">3</span> <span class="content">Identity Delegation and Ambient Authority</span></a>
+    <li><a href="#user-agent-duties"><span class="secno">4</span> <span class="content">User Agent Duties and Contextual Identity</span></a>
+    <li><a href="#private-browsing"><span class="secno">5</span> <span class="content">Private Browsing Isolation and Memory Lifetime</span></a>
+    <li><a href="#agent-scope"><span class="secno">6</span> <span class="content">Agent Scope and the Confused Deputy Problem</span></a>
+    <li><a href="#model-reliability"><span class="secno">7</span> <span class="content">Alignment and Model Reliability</span></a>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Non-Normative References</span></a>
+     </ol>
    </ol>
   </nav>
   <main>
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
-   <p>Introduction here.</p>
+   <p>Since the launch of ChatGPT, software based on large language models (LLMs) has become more popular and more deeply integrated.
+"Agentic browsing" refers to a browsing model in which an LLM-based system navigates the web and performs actions on the user’s behalf.
+In the context of this Finding, we use "agent" to refer to the system that uses the browser’s affordances.
+The user can interact with the agent through text-based or voice-based conversation, including in real time.</p>
+   <div class="example" id="agentic-browsers"><a class="self-link" href="#agentic-browsers"></a>
+There are full-scale agentic browsers such as Perplexity Comet and Opera Neon.
+In some regions, Google Chrome ships with an integrated Gemini pane that performs agentic browsing for the user.
+Browsers can also be driven by desktop or command-line AI systems such as Claude Desktop and OpenAI Codex, or by AI integrations in integrated development environments (IDEs).
+</div>
+   <p>Agentic browsing currently relies on screenshots and on evaluating the DOM and accessibility tree.
+With current models, this can be brittle and slow.
+Proposals like <a data-link-type="biblio" href="#biblio-webmcp" title="WebMCP">[WEBMCP]</a> aim to address this issue by letting websites provide tool definitions to agents.</p>
+   <p>Agentic browsing improves the user experience, but it also raises security and privacy concerns, which this Finding sets out below.</p>
+   <h2 class="heading settled" data-level="2" id="same-origin-policy"><span class="secno">2. </span><span class="content">Same-Origin Policy and Cross-Origin Data Flows</span><a class="self-link" href="#same-origin-policy"></a></h2>
+   <p>There is ambiguity on the enforcement of Same-Origin Policy (SOP).
+An agent may carry state from origin A into a tool registered by origin B.
+Proposals in this space tend to state this risk and defer the mitigation to permissions policies and other cross-origin opt-in mechanisms without specifying them.
+Without such a mechanism, the only thing standing between cross-origin state and exfiltration is the model’s disposition to refuse.
+This inverts the web’s security model.
+The SOP is a deterministic state, not a heuristic.
+A cross-origin data path mediated by model judgement seems to fail the principle.
+TAG suggests specifying a browser-enforced partition on the context an agent may carry across origins, defined as a mechanism, not an intent.
+If the SOP cannot be preserved mechanically, it is a blocking architectural problem.
+Aligned with the same concern, agents are commonly given access to personalisation data, history, and inferred attributes.
+A site might obtain those by asking the agent for them in a JSON schema rather than by triggering a browser permission prompt or something that would commonly require a user gesture (e.g., filling a form from contact data).
+Agentic browsing risks re-opening cross-context data flows that the platform is intentionally closing.</p>
+   <h2 class="heading settled" data-level="3" id="identity-delegation"><span class="secno">3. </span><span class="content">Identity Delegation and Ambient Authority</span><a class="self-link" href="#identity-delegation"></a></h2>
+   <p>There is ambiguity in the identity delegation.
+Agents typically inherit the user’s logged-in credentials and session state (identity inheritance) and may access personalization data, browsing history, and payment information (extended user context) across sites (cross-site context).
+The consequence is that an authenticated agent can make purchases, transfer funds, change account settings, share private data, or delete content without any additional verification or permission (even if well-intentioned).</p>
+   <h2 class="heading settled" data-level="4" id="user-agent-duties"><span class="secno">4. </span><span class="content">User Agent Duties and Contextual Identity</span><a class="self-link" href="#user-agent-duties"></a></h2>
+   <p>The user agent is a trustworthy agent bound by duties of Protection, Discretion, Honesty, and Loyalty, as it "always puts that person’s interest first" and "is not the first party." An agent that handles the user’s full cross-site identity to satisfy a third-party tool is acting closer to a first party than a loyal user agent.
+It also runs counter to Privacy Principle 2.1 (present the identity the user wants per context; prevent cross-context recognition).
+Agent identity delegation is not a settled concept, and proposals should not assume it as a precondition.</p>
+   <h2 class="heading settled" data-level="5" id="private-browsing"><span class="secno">5. </span><span class="content">Private Browsing Isolation and Memory Lifetime</span><a class="self-link" href="#private-browsing"></a></h2>
+   <p>For private browsing, the risk is frequently acknowledged and then discharged onto the user agent.
+Two structural gaps need to be clarified:</p>
+   <ul>
+    <li data-md>
+     <p>Memory (transcript) lifetime is unspecified.
+An agent operating in a private-browsing window ingests DOM, schemas, and inputs into a context window.
+It is often unspecified whether, when, or how that context is cleared when the session ends.
+Are interactions with a private browsing session logged and potentially reused?</p>
+    <li data-md>
+     <p>No partition against context bleed.
+Given identity inheritance and extended user context, nothing mechanical stops an agent invoked in a private tab from drawing on the main profile’s history to satisfy a tool call or vice versa.
+One solution could be to specify a partitioned agent context for private-browsing sessions with defined memory lifetime and a hard bar on drawing main-profile context, plus a normative statement that the browsing mode cannot be inferred through any API.</p>
+   </ul>
+   <h2 class="heading settled" data-level="6" id="agent-scope"><span class="secno">6. </span><span class="content">Agent Scope and the Confused Deputy Problem</span><a class="self-link" href="#agent-scope"></a></h2>
+   <p>The agent definition is not clearly scoped.
+The agent seems to be a confused deputy: it owns the user’s ambient authority (credentials, session, cross-site context) while taking instructions from untrusted parties (tool descriptions and names, tool output, page content).
+The mitigations for a confused deputy (scope authority to explicit capabilities instead of ambient identity, and keep the instruction channel separate from the data channel) cannot be provided by an LLM, because it collapses instructions and data into one token stream.
+The core problem here is about where authority sits.
+Guardrails such as evaluation corpora do not seem to be sufficient to fix it.
+Also, agents are commonly defined as autonomous assistants that can "understand a user’s goals and take actions." A security and privacy analysis that rests on the behaviour of an entity that a specification cannot constrain or characterise is under-determined.
+Either narrow what a conforming agent may do (capabilities, isolation obligations), or accept that any security and privacy guarantees are advisory.
+Right now, they read as the latter while being presented as the former.</p>
+   <h2 class="heading settled" data-level="7" id="model-reliability"><span class="secno">7. </span><span class="content">Alignment and Model Reliability</span><a class="self-link" href="#model-reliability"></a></h2>
+   <p>Note also that "understand a user’s goals" is a fundamental <a href="https://en.wikipedia.org/wiki/AI_alignment">"alignment problem"</a> with LLMs and something models often get wrong.
+Models are aligned differently, and no matter how well-intentioned, they make mistakes, make bad assumptions, hallucinate, etc.
+Even with well-intentioned tools and descriptions, LLMs can cause user annoyance at a minimum to outright user harm.</p>
   </main>
   <script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
+  <h2 class="heading no-num no-ref settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Non-Normative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-webmcp">[WEBMCP]
+   <dd>Brandon Walderman; Khushal Sagar; Dominic Farolino. <a href="https://webmachinelearning.github.io/webmcp/"><cite>WebMCP</cite></a>. 2 October 2026. Draft Community Group Report. URL: <a href="https://webmachinelearning.github.io/webmcp/">https://webmachinelearning.github.io/webmcp/</a>
+  </dl>

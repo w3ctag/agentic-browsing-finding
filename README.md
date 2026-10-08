@@ -1,3 +1,3 @@
-# Finding Name
+# Agentic Browsing and Web Architecture
 
-This repository contains a draft finding about [finding topic].
+This repository contains a draft finding about Agentic Browsing and Web Architecture.

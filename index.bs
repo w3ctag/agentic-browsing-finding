@@ -1,13 +1,15 @@
 <pre class='metadata'>
-Title: Your Spec Title
-Shortname: your-spec
+Title: Agentic Browsing and Web Architecture
+Shortname: agentic-browsing
 Level: None
 Status: DRAFT-FINDING
 Group: TAG
-ED: https://w3ctag.github.io/repo-name/
-Repository: w3ctag/repo-name
-Editor: Your Name, Your Company http://example.com/your-company, your-email@example.com, http://example.com/your-personal-website
-Abstract: A short description of your spec, one or two sentences.
+ED: https://w3ctag.github.io/agentic-browsing-finding/
+Repository: w3ctag/agentic-browsing-finding
+Editor: 
+ Ehsan Toreini, Samsung Electronics, e.toreini@samsung.com, https://toreini.github.io
+ Christian Liebel, Thinktecture AG https://thinktecture.com, christian.liebel@thinktecture.com, https://christianliebel.com
+Abstract: Agentic browsing is becoming increasingly popular, and agentic browsers and browser extensions ship regularly. While they improve the user experience, they also raise security and privacy considerations, which this Finding sets out.
 Complain About: accidental-2119 yes, missing-example-ids yes
 Assume Explicit For: on
 Die On: lint
@@ -15,7 +17,99 @@ Markup Shorthands: markdown yes, css no
 Boilerplate: conformance no
 </pre>
 
+<pre class='biblio'>
+{
+	"WEBMCP": {
+		"title": "WebMCP",
+		"authors": ["Brandon Walderman", "Khushal Sagar", "Dominic Farolino"],
+		"date": "2 October 2026",
+		"status": "Draft Community Group Report",
+		"publisher": "Web Machine Learning Community Group",
+		"href": "https://webmachinelearning.github.io/webmcp/"
+	}
+}
+</pre>
+
 Introduction {#intro}
 =====================
 
-Introduction here.
+Since the launch of ChatGPT, software based on large language models (LLMs) has become more popular and more deeply integrated.
+"Agentic browsing" refers to a browsing model in which an LLM-based system navigates the web and performs actions on the user's behalf.
+In the context of this Finding, we use "agent" to refer to the system that uses the browser's affordances.
+The user can interact with the agent through text-based or voice-based conversation, including in real time.
+
+<div class="example" id="agentic-browsers">
+There are full-scale agentic browsers such as Perplexity Comet and Opera Neon.
+In some regions, Google Chrome ships with an integrated Gemini pane that performs agentic browsing for the user.
+Browsers can also be driven by desktop or command-line AI systems such as Claude Desktop and OpenAI Codex, or by AI integrations in integrated development environments (IDEs).
+</div>
+
+Agentic browsing currently relies on screenshots and on evaluating the DOM and accessibility tree.
+With current models, this can be brittle and slow.
+Proposals like [[WEBMCP]] aim to address this issue by letting websites provide tool definitions to agents.
+
+Agentic browsing improves the user experience, but it also raises security and privacy concerns, which this Finding sets out below.
+
+
+Same-Origin Policy and Cross-Origin Data Flows {#same-origin-policy}
+====================================================================
+
+There is ambiguity on the enforcement of Same-Origin Policy (SOP).
+An agent may carry state from origin A into a tool registered by origin B.
+Proposals in this space tend to state this risk and defer the mitigation to permissions policies and other cross-origin opt-in mechanisms without specifying them.
+Without such a mechanism, the only thing standing between cross-origin state and exfiltration is the model's disposition to refuse.
+This inverts the web's security model.
+The SOP is a deterministic state, not a heuristic.
+A cross-origin data path mediated by model judgement seems to fail the principle.
+TAG suggests specifying a browser-enforced partition on the context an agent may carry across origins, defined as a mechanism, not an intent.
+If the SOP cannot be preserved mechanically, it is a blocking architectural problem.
+Aligned with the same concern, agents are commonly given access to personalisation data, history, and inferred attributes.
+A site might obtain those by asking the agent for them in a JSON schema rather than by triggering a browser permission prompt or something that would commonly require a user gesture (e.g., filling a form from contact data).
+Agentic browsing risks re-opening cross-context data flows that the platform is intentionally closing.
+
+Identity Delegation and Ambient Authority {#identity-delegation}
+================================================================
+
+There is ambiguity in the identity delegation.
+Agents typically inherit the user's logged-in credentials and session state (identity inheritance) and may access personalization data, browsing history, and payment information (extended user context) across sites (cross-site context).
+The consequence is that an authenticated agent can make purchases, transfer funds, change account settings, share private data, or delete content without any additional verification or permission (even if well-intentioned).
+
+User Agent Duties and Contextual Identity {#user-agent-duties}
+==============================================================
+
+The user agent is a trustworthy agent bound by duties of Protection, Discretion, Honesty, and Loyalty, as it "always puts that person's interest first" and "is not the first party." An agent that handles the user's full cross-site identity to satisfy a third-party tool is acting closer to a first party than a loyal user agent.
+It also runs counter to Privacy Principle 2.1 (present the identity the user wants per context; prevent cross-context recognition).
+Agent identity delegation is not a settled concept, and proposals should not assume it as a precondition.
+
+Private Browsing Isolation and Memory Lifetime {#private-browsing}
+==================================================================
+
+For private browsing, the risk is frequently acknowledged and then discharged onto the user agent.
+Two structural gaps need to be clarified:
+* Memory (transcript) lifetime is unspecified.
+    An agent operating in a private-browsing window ingests DOM, schemas, and inputs into a context window.
+    It is often unspecified whether, when, or how that context is cleared when the session ends.
+    Are interactions with a private browsing session logged and potentially reused? 
+* No partition against context bleed.
+    Given identity inheritance and extended user context, nothing mechanical stops an agent invoked in a private tab from drawing on the main profile's history to satisfy a tool call or vice versa.
+    One solution could be to specify a partitioned agent context for private-browsing sessions with defined memory lifetime and a hard bar on drawing main-profile context, plus a normative statement that the browsing mode cannot be inferred through any API.
+
+Agent Scope and the Confused Deputy Problem {#agent-scope}
+==========================================================
+
+The agent definition is not clearly scoped.
+The agent seems to be a confused deputy: it owns the user's ambient authority (credentials, session, cross-site context) while taking instructions from untrusted parties (tool descriptions and names, tool output, page content).
+The mitigations for a confused deputy (scope authority to explicit capabilities instead of ambient identity, and keep the instruction channel separate from the data channel) cannot be provided by an LLM, because it collapses instructions and data into one token stream.
+The core problem here is about where authority sits.
+Guardrails such as evaluation corpora do not seem to be sufficient to fix it.
+Also, agents are commonly defined as autonomous assistants that can "understand a user's goals and take actions." A security and privacy analysis that rests on the behaviour of an entity that a specification cannot constrain or characterise is under-determined.
+Either narrow what a conforming agent may do (capabilities, isolation obligations), or accept that any security and privacy guarantees are advisory.
+Right now, they read as the latter while being presented as the former.
+
+Alignment and Model Reliability {#model-reliability}
+====================================================
+
+Note also that "understand a user's goals" is a fundamental ["alignment problem"](https://en.wikipedia.org/wiki/AI_alignment) with LLMs and something models often get wrong.
+Models are aligned differently, and no matter how well-intentioned, they make mistakes, make bad assumptions, hallucinate, etc.
+Even with well-intentioned tools and descriptions, LLMs can cause user annoyance at a minimum to outright user harm.
+

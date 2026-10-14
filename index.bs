@@ -87,12 +87,12 @@ Private Browsing Isolation and Memory Lifetime {#private-browsing}
 For private browsing, the risk is frequently acknowledged and then discharged onto the user agent.
 Two structural gaps need to be clarified:
 * Memory (transcript) lifetime is unspecified.
-    An agent operating in a private-browsing window ingests DOM, schemas, and inputs into a context window.
-    It is often unspecified whether, when, or how that context is cleared when the session ends.
-    Are interactions with a private browsing session logged and potentially reused? 
+	An agent operating in a private-browsing window ingests DOM, schemas, and inputs into a context window.
+	It is often unspecified whether, when, or how that context is cleared when the session ends.
+	Are interactions with a private browsing session logged and potentially reused? 
 * No partition against context bleed.
-    Given identity inheritance and extended user context, nothing mechanical stops an agent invoked in a private tab from drawing on the main profile's history to satisfy a tool call or vice versa.
-    One solution could be to specify a partitioned agent context for private-browsing sessions with defined memory lifetime and a hard bar on drawing main-profile context, plus a normative statement that the browsing mode cannot be inferred through any API.
+	Given identity inheritance and extended user context, nothing mechanical stops an agent invoked in a private tab from drawing on the main profile's history to satisfy a tool call or vice versa.
+	One solution could be to specify a partitioned agent context for private-browsing sessions with defined memory lifetime and a hard bar on drawing main-profile context, plus a normative statement that the browsing mode cannot be inferred through any API.
 
 Agent Scope and the Confused Deputy Problem {#agent-scope}
 ==========================================================

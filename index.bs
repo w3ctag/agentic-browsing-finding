@@ -41,7 +41,7 @@ The user can interact with the agent through text-based or voice-based conversat
 <div class="example" id="agentic-browsers">
 There are full-scale agentic browsers such as Perplexity Comet and Opera Neon.
 In some regions, Google Chrome ships with an integrated Gemini pane that performs agentic browsing for the user.
-Browsers can also be driven by desktop or command-line AI systems such as Claude Desktop and OpenAI Codex, or by AI integrations in integrated development environments (IDEs).
+Browsers can also be driven by desktop or command-line AI systems such as Claude Desktop and OpenAI Codex, by AI integrations in integrated development environments (IDEs), or by "computer use" models.
 </div>
 
 Agentic browsing currently relies on screenshots and on evaluating the DOM and accessibility tree.

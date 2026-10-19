@@ -63,8 +63,8 @@ Proposals like [[WEBMCP]] aim to address this issue by letting websites provide 
 
 Agentic browsing improves the user experience, but it also raises security and privacy concerns, which this Finding sets out below.
 
-Agentic Browsers May Exhibit the Lethal Trifecta {#lethal-trifecta}
-===================================================================
+Agentic Browsers Exhibit the Lethal Trifecta {#lethal-trifecta}
+===============================================================
 
 Simon Willison coined the term "Lethal Trifecta" [[LETHAL-TRIFECTA]], the combination of:
 
@@ -74,14 +74,14 @@ Simon Willison coined the term "Lethal Trifecta" [[LETHAL-TRIFECTA]], the combin
 
 Willison concluded that for users to stay safe, the Lethal Trifecta must be avoided entirely.
 
-Agentic browsers, while potentially useful, may exhibit the Lethal Trifecta:
+Agentic browsers, while potentially useful, exhibit the Lethal Trifecta:
 
 1. Agentic browsers have access to autofill data, login details, and potentially additional agent-provided memory about the user.
 1. Agentic browsers can submit forms, send HTTP requests, or use agent-mediated communication methods such as connected Model Context Protocol (MCP) servers (e.g., to send emails).
 1. Web content is untrusted by default.
 
-Authors and proponents of agentic browsers use some form of informal "ceremony" analysis [[CEREMONY]] to conclude that human users aren't safe either (e.g., users also break the Same-Origin Policy), and that agents can be "safe enough."
-We expect those actors to formalize and publish that analysis.
+We suspect that authors and proponents of agentic browsers are using a form of informal "ceremony" analysis [[CEREMONY]] to conclude that, because human users aren't safe either (e.g., users also break the Same-Origin Policy), agents can be "safe enough."
+We strongly encourage those actors to formalize, quantify, and publish that analysis.
 
 <div class="example" id="attack-vector">
 A malicious website could claim to be the user's bank, and request all the personally identifiable information (PII) about the user to be entered into a form, and then sent to an attacker.

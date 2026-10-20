@@ -115,7 +115,7 @@ User Agent Duties and Contextual Identity {#user-agent-duties}
 ==============================================================
 
 The user agent is a trustworthy agent bound by duties of Protection, Discretion, Honesty, and Loyalty, as it "always puts that person's interest first" and "is not the first party." An agent that handles the user's full cross-site identity to satisfy a third-party tool is acting closer to a first party than a loyal user agent.
-It also runs counter to Privacy Principle 2.1 (present the identity the user wants per context; prevent cross-context recognition).
+It also runs counter to [[privacy-principles#identity]] (present the identity the user wants per context; prevent cross-context recognition).
 Agent identity delegation is not a settled concept, and proposals should not assume it as a precondition.
 
 Private Browsing Isolation and Memory Lifetime {#private-browsing}

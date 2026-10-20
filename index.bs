@@ -39,6 +39,13 @@ Boilerplate: conformance no
 		"date": "2007",
 		"publisher": "IACR Cryptology ePrint Archive, Report 2007/399",
 		"href": "https://eprint.iacr.org/2007/399.pdf"
+	},
+	"USER-AGENTS": {
+		"title": "User Agents",
+		"date": "13 October 2026",
+		"status": "Editor's Draft",
+		"publisher": "W3C Technical Architecture Group",
+		"href": "https://w3ctag.github.io/user-agents/"
 	}
 }
 </pre>
@@ -114,7 +121,7 @@ The consequence is that an authenticated agent can make purchases, transfer fund
 User Agent Duties and Contextual Identity {#user-agent-duties}
 ==============================================================
 
-The user agent is a trustworthy agent bound by duties of Protection, Discretion, Honesty, and Loyalty, as it "always puts that person's interest first" and "is not the first party." An agent that handles the user's full cross-site identity to satisfy a third-party tool is acting closer to a first party than a loyal user agent.
+The user agent is a trustworthy agent bound by duties of [Protection](https://w3ctag.github.io/user-agents/#protection), [Honesty](https://w3ctag.github.io/user-agents/#honesty), and [Loyalty](https://w3ctag.github.io/user-agents/#loyalty) [[USER-AGENTS]], as it "always puts that person's interest first" and "is not the first party" [[privacy-principles#user-agents]]. An agent that handles the user's full cross-site identity to satisfy a third-party tool is acting closer to a first party than a loyal user agent.
 It also runs counter to Privacy Principle 2.1 (present the identity the user wants per context; prevent cross-context recognition).
 Agent identity delegation is not a settled concept, and proposals should not assume it as a precondition.
 

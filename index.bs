@@ -139,7 +139,7 @@ The agent seems to be a confused deputy: it owns the user's ambient authority (c
 The mitigations for a confused deputy (scope authority to explicit capabilities instead of ambient identity, and keep the instruction channel separate from the data channel) cannot be provided by an LLM, because it collapses instructions and data into one token stream.
 The core problem here is about where authority sits.
 Guardrails such as evaluation corpora do not seem to be sufficient to fix it.
-Also, agents are commonly defined as autonomous assistants that can "understand a user's goals and take actions." A security and privacy analysis that rests on the behaviour of an entity that a specification cannot constrain or characterise is under-determined.
+Also, agents are commonly defined as autonomous assistants that can [[WEBMCP#agent|"understand a user's goals and take actions"]] [[WEBMCP]]. A security and privacy analysis that rests on the behaviour of an entity that a specification cannot constrain or characterise is under-determined.
 Either narrow what a conforming agent may do (capabilities, isolation obligations), or accept that any security and privacy guarantees are advisory.
 Right now, they read as the latter while being presented as the former.
 

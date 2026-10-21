@@ -117,7 +117,7 @@ Two structural gaps need to be clarified:
 Alignment and Model Reliability {#model-reliability}
 ====================================================
 
-Agents are commonly defined as autonomous assistants that can ["understand a user's goals and take actions"](https://webmachinelearning.github.io/webmcp/#agent) [[WEBMCP]].
+Agents are commonly defined as autonomous assistants that can [[WEBMCP#agent|"understand a user's goals and take actions"]] [[WEBMCP]].
 Note that "understand a user's goals" is a fundamental ["alignment problem"](https://en.wikipedia.org/wiki/AI_alignment) with LLMs and something models often get wrong.
 Models are aligned differently, and no matter how well-intentioned, they make mistakes, make bad assumptions, hallucinate, etc.
 Even with well-intentioned tools and descriptions, LLMs can cause user annoyance at a minimum to outright user harm.

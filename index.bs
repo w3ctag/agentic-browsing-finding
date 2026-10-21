@@ -39,13 +39,6 @@ Boilerplate: conformance no
 		"date": "2007",
 		"publisher": "IACR Cryptology ePrint Archive, Report 2007/399",
 		"href": "https://eprint.iacr.org/2007/399.pdf"
-	},
-	"USER-AGENTS": {
-		"title": "User Agents",
-		"date": "13 October 2026",
-		"status": "Editor's Draft",
-		"publisher": "W3C Technical Architecture Group",
-		"href": "https://w3ctag.github.io/user-agents/"
 	}
 }
 </pre>

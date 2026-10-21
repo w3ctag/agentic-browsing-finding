@@ -87,23 +87,6 @@ We strongly encourage those actors to formalize, quantify, and publish that anal
 A malicious website could claim to be the user's bank, and request all the personally identifiable information (PII) about the user to be entered into a form, and then sent to an attacker.
 </div>
 
-
-Same-Origin Policy and Cross-Origin Data Flows {#same-origin-policy}
-====================================================================
-
-There is ambiguity on the enforcement of Same-Origin Policy (SOP).
-An agent may carry state from origin A into a tool registered by origin B.
-Proposals in this space tend to state this risk and defer the mitigation to permissions policies and other cross-origin opt-in mechanisms without specifying them.
-Without such a mechanism, the only thing standing between cross-origin state and exfiltration is the model's disposition to refuse.
-This inverts the web's security model.
-The SOP is a deterministic state, not a heuristic.
-A cross-origin data path mediated by model judgement seems to fail the principle.
-TAG suggests specifying a browser-enforced partition on the context an agent may carry across origins, defined as a mechanism, not an intent.
-If the SOP cannot be preserved mechanically, it is a blocking architectural problem.
-Aligned with the same concern, agents are commonly given access to personalisation data, history, and inferred attributes.
-A site might obtain those by asking the agent for them in a JSON schema rather than by triggering a browser permission prompt or something that would commonly require a user gesture (e.g., filling a form from contact data).
-Agentic browsing risks re-opening cross-context data flows that the platform is intentionally closing.
-
 Identity Delegation and Ambient Authority {#identity-delegation}
 ================================================================
 
@@ -131,22 +114,11 @@ Two structural gaps need to be clarified:
 	Given identity inheritance and extended user context, nothing mechanical stops an agent invoked in a private tab from drawing on the main profile's history to satisfy a tool call or vice versa.
 	One solution could be to specify a partitioned agent context for private-browsing sessions with defined memory lifetime and a hard bar on drawing main-profile context, plus a normative statement that the browsing mode cannot be inferred through any API.
 
-Agent Scope and the Confused Deputy Problem {#agent-scope}
-==========================================================
-
-The agent definition is not clearly scoped.
-The agent seems to be a confused deputy: it owns the user's ambient authority (credentials, session, cross-site context) while taking instructions from untrusted parties (tool descriptions and names, tool output, page content).
-The mitigations for a confused deputy (scope authority to explicit capabilities instead of ambient identity, and keep the instruction channel separate from the data channel) cannot be provided by an LLM, because it collapses instructions and data into one token stream.
-The core problem here is about where authority sits.
-Guardrails such as evaluation corpora do not seem to be sufficient to fix it.
-Also, agents are commonly defined as autonomous assistants that can [[WEBMCP#agent|"understand a user's goals and take actions"]] [[WEBMCP]]. A security and privacy analysis that rests on the behaviour of an entity that a specification cannot constrain or characterise is under-determined.
-Either narrow what a conforming agent may do (capabilities, isolation obligations), or accept that any security and privacy guarantees are advisory.
-Right now, they read as the latter while being presented as the former.
-
 Alignment and Model Reliability {#model-reliability}
 ====================================================
 
-Note also that "understand a user's goals" is a fundamental ["alignment problem"](https://en.wikipedia.org/wiki/AI_alignment) with LLMs and something models often get wrong.
+Agents are commonly defined as autonomous assistants that can <a spec=webmcp lt=agent>"understand a user's goals and take actions"</a> [[WEBMCP]].
+Note that "understand a user's goals" is a fundamental ["alignment problem"](https://en.wikipedia.org/wiki/AI_alignment) with LLMs and something models often get wrong.
 Models are aligned differently, and no matter how well-intentioned, they make mistakes, make bad assumptions, hallucinate, etc.
 Even with well-intentioned tools and descriptions, LLMs can cause user annoyance at a minimum to outright user harm.
 

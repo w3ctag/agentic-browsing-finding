@@ -134,14 +134,15 @@ Two structural gaps need to be clarified:
 Agent Scope and the Confused Deputy Problem {#agent-scope}
 ==========================================================
 
-The agent definition is not clearly scoped.
-The agent seems to be a confused deputy: it owns the user's ambient authority (credentials, session, cross-site context) while taking instructions from untrusted parties (tool descriptions and names, tool output, page content).
-The mitigations for a confused deputy (scope authority to explicit capabilities instead of ambient identity, and keep the instruction channel separate from the data channel) cannot be provided by an LLM, because it collapses instructions and data into one token stream.
-The core problem here is about where authority sits.
-Guardrails such as evaluation corpora do not seem to be sufficient to fix it.
-Also, agents are commonly defined as autonomous assistants that can [[WEBMCP#agent|"understand a user's goals and take actions"]] [[WEBMCP]]. A security and privacy analysis that rests on the behaviour of an entity that a specification cannot constrain or characterise is under-determined.
-Either narrow what a conforming agent may do (capabilities, isolation obligations), or accept that any security and privacy guarantees are advisory.
-Right now, they read as the latter while being presented as the former.
+Agentic browsing introduces a potential confused deputy problem when an agent exercises authority delegated by the user while processing content or instructions from untrusted sources. An agent may have access to authenticated sessions, user data, or other capabilities that a website or third-party tool does not possess. If that website or tool can influence the agent's behavior through page content, tool descriptions, or tool responses, it may be able to induce the agent to exercise the user's authority in ways the user did not intend.
+
+This problem is distinct from the delegation concerns described in Section 4. Even when an agent has been granted appropriately scoped authority, it must maintain the distinction between instructions from the user and information obtained from other sources. For example, a user might authorize an agent to review financial information, but content retrieved during that task could attempt to instruct the agent to transfer funds or disclose account details. The fact that the agent is authorized to access that information does not mean that the retrieved content is authorized to direct the agent's actions.
+
+The architectural challenge is that LLM-based agents may interpret instructions and untrusted data together, making it difficult to rely on the model alone to maintain the boundary between them. An LLM's interpretation of instructions cannot, by itself, establish an enforceable security boundary. Techniques such as prompt filtering, model alignment, and behavioral evaluations may reduce the likelihood of inappropriate actions, but they do not replace mechanisms that constrain the authority available to the agent.
+
+Agentic browsing architectures should therefore define how authority is scoped, how instructions from different sources are distinguished, and how actions are constrained independently of the model's interpretation of those instructions. Delegated authority should remain bounded throughout multi-step workflows, including interactions with additional websites and third-party tools. Untrusted content must not be able to grant new authority to the agent or expand the scope of authority previously granted by the user.
+
+Specifications should identify which security properties are guaranteed by enforceable mechanisms and which depend on model behavior. Where security-sensitive operations depend on an agent's interpretation of instructions, specifications should make those dependencies and their limitations explicit rather than presenting behavioral expectations as enforceable guarantees.
 
 Alignment and Model Reliability {#model-reliability}
 ====================================================

@@ -107,9 +107,9 @@ Agentic browsing risks re-opening cross-context data flows that the platform is 
 Identity Delegation and Ambient Authority {#identity-delegation}
 ================================================================
 
-There is ambiguity in the identity delegation.
-Agents typically inherit the user's logged-in credentials and session state (identity inheritance) and may access personalization data, browsing history, and payment information (extended user context) across sites (cross-site context).
-The consequence is that an authenticated agent can make purchases, transfer funds, change account settings, share private data, or delete content without any additional verification or permission (even if well-intentioned).
+Agentic browsing raises questions about how authority is delegated and enforced. An agent operating within a user's authenticated browser session may be able to act using that session's existing permissions, without a distinct authorization grant defining what the agent is permitted to do on the user's behalf. The relying website may be unable to distinguish between actions initiated directly by the user and those performed by the agent.
+
+This creates a risk that an agent can exercise authority beyond what the user intended, including making purchases, changing account settings, sharing private information, or deleting content. The problem is not authentication alone, but the absence of clear boundaries between the user's authority and the authority delegated to the agent. Agentic browsing mechanisms should support explicit, appropriately scoped delegation and provide ways to enforce those boundaries, rather than relying solely on existing authenticated sessions or the agent's interpretation of the user's instructions.
 
 User Agent Duties and Contextual Identity {#user-agent-duties}
 ==============================================================

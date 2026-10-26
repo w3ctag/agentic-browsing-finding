@@ -146,8 +146,13 @@ Specifications should identify which security properties are guaranteed by enfor
 
 Alignment and Model Reliability {#model-reliability}
 ====================================================
+Even when an agent operates within appropriately delegated authority and is protected against attempts by untrusted parties to redirect its behavior, it may still misunderstand the user's goals or take actions that produce unintended consequences. Interpreting natural-language instructions requires assumptions about context, intent, and acceptable outcomes. LLM-based agents may make incorrect assumptions, misinterpret ambiguous requests, or generate inaccurate information, even when the user, agent, and services involved are acting in good faith.
 
-Note also that "understand a user's goals" is a fundamental ["alignment problem"](https://en.wikipedia.org/wiki/AI_alignment) with LLMs and something models often get wrong.
-Models are aligned differently, and no matter how well-intentioned, they make mistakes, make bad assumptions, hallucinate, etc.
-Even with well-intentioned tools and descriptions, LLMs can cause user annoyance at a minimum to outright user harm.
+These reliability concerns are distinct from the security problems described in Section 7. An agent does not need to be manipulated by a malicious party to take an inappropriate action. For example, an agent asked to reorganize a user's files might delete material that the user intended to preserve, or an agent making a reservation might select an option that satisfies the literal request but conflicts with the user's preferences. Such actions may fall within the agent's technical permissions while exceeding what the user reasonably intended.
+
+Model alignment, evaluations, and behavioral safeguards can help reduce these risks, but they cannot guarantee that an agent will correctly interpret every request or anticipate every consequence. Agentic browsing architectures should therefore account for the possibility of incorrect decisions, particularly when actions are irreversible, financially consequential, privacy-sensitive, or otherwise difficult to remedy.
+
+Mechanisms for limiting the consequences of mistakes may include constraints on permitted actions, confirmation for consequential operations, opportunities to review proposed actions, and the ability to interrupt or reverse operations where feasible. The appropriate safeguards will depend on the nature and consequences of the action, rather than requiring user confirmation for every step of an agent's workflow.
+
+Specifications should distinguish between the behavior they expect from an agent and the properties that the surrounding architecture can enforce. The reliability of an agent's interpretation of user intent should not be the sole basis for protecting users against consequential or irreversible actions.
 

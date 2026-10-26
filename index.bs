@@ -107,9 +107,9 @@ Agentic browsing risks re-opening cross-context data flows that the platform is 
 Identity Delegation and Ambient Authority {#identity-delegation}
 ================================================================
 
-There is ambiguity in the identity delegation.
-Agents typically inherit the user's logged-in credentials and session state (identity inheritance) and may access personalization data, browsing history, and payment information (extended user context) across sites (cross-site context).
-The consequence is that an authenticated agent can make purchases, transfer funds, change account settings, share private data, or delete content without any additional verification or permission (even if well-intentioned).
+Agentic browsing raises questions about how authority is delegated and enforced. An agent operating within a user's authenticated browser session may be able to act using that session's existing permissions, without a distinct authorization grant defining what the agent is permitted to do on the user's behalf. The relying website may be unable to distinguish between actions initiated directly by the user and those performed by the agent.
+
+This creates a risk that an agent can exercise authority beyond what the user intended, including making purchases, changing account settings, sharing private information, or deleting content. The problem is not authentication alone, but the absence of clear boundaries between the user's authority and the authority delegated to the agent. Agentic browsing mechanisms should support explicit, appropriately scoped delegation and provide ways to enforce those boundaries, rather than relying solely on existing authenticated sessions or the agent's interpretation of the user's instructions.
 
 User Agent Duties and Contextual Identity {#user-agent-duties}
 ==============================================================
@@ -134,19 +134,25 @@ Two structural gaps need to be clarified:
 Agent Scope and the Confused Deputy Problem {#agent-scope}
 ==========================================================
 
-The agent definition is not clearly scoped.
-The agent seems to be a confused deputy: it owns the user's ambient authority (credentials, session, cross-site context) while taking instructions from untrusted parties (tool descriptions and names, tool output, page content).
-The mitigations for a confused deputy (scope authority to explicit capabilities instead of ambient identity, and keep the instruction channel separate from the data channel) cannot be provided by an LLM, because it collapses instructions and data into one token stream.
-The core problem here is about where authority sits.
-Guardrails such as evaluation corpora do not seem to be sufficient to fix it.
-Also, agents are commonly defined as autonomous assistants that can [[WEBMCP#agent|"understand a user's goals and take actions"]] [[WEBMCP]]. A security and privacy analysis that rests on the behaviour of an entity that a specification cannot constrain or characterise is under-determined.
-Either narrow what a conforming agent may do (capabilities, isolation obligations), or accept that any security and privacy guarantees are advisory.
-Right now, they read as the latter while being presented as the former.
+Agentic browsing introduces a potential confused deputy problem when an agent exercises authority delegated by the user while processing content or instructions from untrusted sources. An agent may have access to authenticated sessions, user data, or other capabilities that a website or third-party tool does not possess. If that website or tool can influence the agent's behavior through page content, tool descriptions, or tool responses, it may be able to induce the agent to exercise the user's authority in ways the user did not intend.
+
+This problem is distinct from the delegation concerns described in Section 4. Even when an agent has been granted appropriately scoped authority, it must maintain the distinction between instructions from the user and information obtained from other sources. For example, a user might authorize an agent to review financial information, but content retrieved during that task could attempt to instruct the agent to transfer funds or disclose account details. The fact that the agent is authorized to access that information does not mean that the retrieved content is authorized to direct the agent's actions.
+
+The architectural challenge is that LLM-based agents may interpret instructions and untrusted data together, making it difficult to rely on the model alone to maintain the boundary between them. An LLM's interpretation of instructions cannot, by itself, establish an enforceable security boundary. Techniques such as prompt filtering, model alignment, and behavioral evaluations may reduce the likelihood of inappropriate actions, but they do not replace mechanisms that constrain the authority available to the agent.
+
+Agentic browsing architectures should therefore define how authority is scoped, how instructions from different sources are distinguished, and how actions are constrained independently of the model's interpretation of those instructions. Delegated authority should remain bounded throughout multi-step workflows, including interactions with additional websites and third-party tools. Untrusted content must not be able to grant new authority to the agent or expand the scope of authority previously granted by the user.
+
+Specifications should identify which security properties are guaranteed by enforceable mechanisms and which depend on model behavior. Where security-sensitive operations depend on an agent's interpretation of instructions, specifications should make those dependencies and their limitations explicit rather than presenting behavioral expectations as enforceable guarantees.
 
 Alignment and Model Reliability {#model-reliability}
 ====================================================
+Even when an agent operates within appropriately delegated authority and is protected against attempts by untrusted parties to redirect its behavior, it may still misunderstand the user's goals or take actions that produce unintended consequences. Interpreting natural-language instructions requires assumptions about context, intent, and acceptable outcomes. LLM-based agents may make incorrect assumptions, misinterpret ambiguous requests, or generate inaccurate information, even when the user, agent, and services involved are acting in good faith.
 
-Note also that "understand a user's goals" is a fundamental ["alignment problem"](https://en.wikipedia.org/wiki/AI_alignment) with LLMs and something models often get wrong.
-Models are aligned differently, and no matter how well-intentioned, they make mistakes, make bad assumptions, hallucinate, etc.
-Even with well-intentioned tools and descriptions, LLMs can cause user annoyance at a minimum to outright user harm.
+These reliability concerns are distinct from the security problems described in Section 7. An agent does not need to be manipulated by a malicious party to take an inappropriate action. For example, an agent asked to reorganize a user's files might delete material that the user intended to preserve, or an agent making a reservation might select an option that satisfies the literal request but conflicts with the user's preferences. Such actions may fall within the agent's technical permissions while exceeding what the user reasonably intended.
+
+Model alignment, evaluations, and behavioral safeguards can help reduce these risks, but they cannot guarantee that an agent will correctly interpret every request or anticipate every consequence. Agentic browsing architectures should therefore account for the possibility of incorrect decisions, particularly when actions are irreversible, financially consequential, privacy-sensitive, or otherwise difficult to remedy.
+
+Mechanisms for limiting the consequences of mistakes may include constraints on permitted actions, confirmation for consequential operations, opportunities to review proposed actions, and the ability to interrupt or reverse operations where feasible. The appropriate safeguards will depend on the nature and consequences of the action, rather than requiring user confirmation for every step of an agent's workflow.
+
+Specifications should distinguish between the behavior they expect from an agent and the properties that the surrounding architecture can enforce. The reliability of an agent's interpretation of user intent should not be the sole basis for protecting users against consequential or irreversible actions.
 

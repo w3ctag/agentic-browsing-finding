@@ -8,7 +8,7 @@
   <meta content="Bikeshed version 49e9fdd4f, updated Tue Oct 13 14:27:53 2026 -0700" name="generator">
   <link href="https://w3ctag.github.io/agentic-browsing-finding/" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="f93a80a837d7140caa0dadc45db9679f0bf306bf" name="revision">
+  <meta content="94adbaf637d10c1b7956e99945fe9ec1a4b42730" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -581,7 +581,7 @@ dfn > a.self-link::before      { content: "#"; }
 </p>
    <h1 class="no-ref p-name" id="title">Agentic Browsing and Web Architecture</h1>
    <p id="w3c-state"><a href="https://tag.w3.org/findings/">Draft Finding of the TAG</a>,
-    <time class="dt-updated" datetime="2026-10-26">26 October 2026</time></p>
+    <time class="dt-updated" datetime="2026-10-27">27 October 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -718,7 +718,8 @@ Agentic browsing risks re-opening cross-context data flows that the platform is 
 Agents typically inherit the user’s logged-in credentials and session state (identity inheritance) and may access personalization data, browsing history, and payment information (extended user context) across sites (cross-site context).
 The consequence is that an authenticated agent can make purchases, transfer funds, change account settings, share private data, or delete content without any additional verification or permission (even if well-intentioned).</p>
    <h2 class="heading settled" data-level="5" id="user-agent-duties"><span class="secno">5. </span><span class="content">User Agent Duties and Contextual Identity</span><a class="self-link" href="#user-agent-duties"></a></h2>
-   <p>The user agent is a trustworthy agent bound by duties of Protection, Discretion, Honesty, and Loyalty, as it "always puts that person’s interest first" and "is not the first party." An agent that handles the user’s full cross-site identity to satisfy a third-party tool is acting closer to a first party than a loyal user agent.
+   <p>The user agent is a trustworthy agent bound by duties of <a href="https://w3ctag.github.io/user-agents#protection">Protection</a>, <a href="https://w3ctag.github.io/user-agents#honesty">Honesty</a>, and <a href="https://w3ctag.github.io/user-agents#loyalty">Loyalty</a>, as it "always puts that person’s interest first" and "is not the first party" [<a href="https://w3ctag.github.io/privacy-principles/#user-agents-0"><cite>Privacy Principles</cite> § 1.4 User Agents</a>].
+An agent that handles the user’s full cross-site identity to satisfy a third-party tool is acting closer to a first party than a loyal user agent.
 It also runs counter to <a href="https://w3ctag.github.io/privacy-principles/#identity-on-the-web"><cite>Privacy Principles</cite> § 2.1 Identity on the Web</a> (present the identity the user wants per context; prevent cross-context recognition).
 Agent identity delegation is not a settled concept, and proposals should not assume it as a precondition.</p>
    <h2 class="heading settled" data-level="6" id="private-browsing"><span class="secno">6. </span><span class="content">Private Browsing Isolation and Memory Lifetime</span><a class="self-link" href="#private-browsing"></a></h2>
@@ -764,6 +765,8 @@ Even with well-intentioned tools and descriptions, LLMs can cause user annoyance
   <dl>
    <dt id="biblio-privacy-principles">[PRIVACY-PRINCIPLES]
    <dd>Robin Berjon; Jeffrey Yasskin. <a href="https://w3ctag.github.io/privacy-principles/"><cite>Privacy Principles</cite></a>. URL: <a href="https://w3ctag.github.io/privacy-principles/">https://w3ctag.github.io/privacy-principles/</a>
+   <dt id="biblio-user-agents">[USER-AGENTS]
+   <dd>Sarven Capadisli; Jeffrey Yasskin. <a href="https://w3ctag.github.io/user-agents"><cite>User Agents</cite></a>. URL: <a href="https://w3ctag.github.io/user-agents">https://w3ctag.github.io/user-agents</a>
    <dt id="biblio-webmcp">[WEBMCP]
    <dd>Brandon Walderman; Khushal Sagar; Dominic Farolino. <a href="https://webmachinelearning.github.io/webmcp/"><cite>WebMCP</cite></a>. 2 October 2026. Draft Community Group Report. URL: <a href="https://webmachinelearning.github.io/webmcp/">https://webmachinelearning.github.io/webmcp/</a>
   </dl>

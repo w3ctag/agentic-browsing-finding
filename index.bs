@@ -114,7 +114,7 @@ The consequence is that an authenticated agent can make purchases, transfer fund
 User Agent Duties and Contextual Identity {#user-agent-duties}
 ==============================================================
 
-The user agent is a trustworthy agent bound by duties of [[user-agents#protection|Protection]], [[user-agents#honesty|Honesty]], and [[user-agents#loyalty|Loyalty]], as it "always puts that person's interest first" and "is not the first party" [[privacy-principles#user-agents]].
+The user agent is a trustworthy agent bound by duties of [[user-agents#protection|Protection]], [[user-agents#honesty|Honesty]], and [[user-agents#loyalty|Loyalty]], as it "always puts that person's interest first" and "is not the first party" [[[privacy-principles#user-agents]]].
 An agent that handles the user's full cross-site identity to satisfy a third-party tool is acting closer to a first party than a loyal user agent.
 It also runs counter to [[privacy-principles#identity]] (present the identity the user wants per context; prevent cross-context recognition).
 Agent identity delegation is not a settled concept, and proposals should not assume it as a precondition.

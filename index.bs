@@ -39,6 +39,13 @@ Boilerplate: conformance no
 		"date": "2007",
 		"publisher": "IACR Cryptology ePrint Archive, Report 2007/399",
 		"href": "https://eprint.iacr.org/2007/399.pdf"
+	},
+	"DELEGATION-PART-ONE": {
+		"title": "Acting on Behalf of Others: Delegation, Consent, and Messy Reality",
+		"authors": ["Heather Flanagan"],
+		"date": "3 June 2025",
+		"publisher": "Spherical Cow Consulting",
+		"href": "https://sphericalcowconsulting.com/2025/06/03/delegation-part-one/"
 	}
 }
 </pre>
@@ -108,6 +115,7 @@ Identity Delegation and Ambient Authority {#identity-delegation}
 ================================================================
 
 There is ambiguity in the identity delegation.
+Acting on someone else's behalf is a long-standing problem in digital identity systems, which were largely built around a single user with a single identity, device, and intent [[DELEGATION-PART-ONE]].
 Agents typically inherit the user's logged-in credentials and session state (identity inheritance) and may access personalization data, browsing history, and payment information (extended user context) across sites (cross-site context).
 The consequence is that an authenticated agent can make purchases, transfer funds, change account settings, share private data, or delete content without any additional verification or permission (even if well-intentioned).
 

@@ -40,13 +40,20 @@ Boilerplate: conformance no
 		"publisher": "IACR Cryptology ePrint Archive, Report 2007/399",
 		"href": "https://eprint.iacr.org/2007/399.pdf"
 	},
-"HARDY-CONFUSED-DEPUTY": {
-    "authors": ["Norm Hardy"],
-    "title": "The Confused Deputy (or why capabilities might have been invented)",
-    "publisher": "ACM SIGOPS Operating Systems Review, 22(4), 36–38",
-    "date": "October 1988",
-    "href": "https://www.cs.utexas.edu/~witchel/380L/papers/hardy88confused.pdf"
-  }
+	"HARDY-CONFUSED-DEPUTY": {
+	    "authors": ["Norm Hardy"],
+	    "title": "The Confused Deputy (or why capabilities might have been invented)",
+	    "publisher": "ACM SIGOPS Operating Systems Review, 22(4), 36–38",
+	    "date": "October 1988",
+	    "href": "https://www.cs.utexas.edu/~witchel/380L/papers/hardy88confused.pdf"
+	},
+	"CAMEL": {
+	    "authors": ["Edoardo Debenedetti", "et al."],
+	    "title": "Defeating Prompt Injections by Design",
+	    "publisher": "Google DeepMind; arXiv:2503.18813",
+	    "date": "2025",
+		"href": "https://arxiv.org/abs/2503.18813"
+	}
 }
 </pre>
 
@@ -104,18 +111,26 @@ As a concrete illustration, a malicious website could impersonate the user's ban
 Same-Origin Policy and Cross-Origin Data Flows {#cross-origin}
 ====================================================================
 
-There is ambiguity on the enforcement of Same-Origin Policy (SOP).
-An agent may carry state from origin A into a tool registered by origin B.
-Proposals in this space tend to state this risk and defer the mitigation to permissions policies and other cross-origin opt-in mechanisms without specifying them.
-Without such a mechanism, the only thing standing between cross-origin state and exfiltration is the model's disposition to refuse.
-This inverts the web's security model.
-The SOP is a deterministic state, not a heuristic.
-A cross-origin data path mediated by model judgement seems to fail the principle.
-TAG suggests specifying a browser-enforced partition on the context an agent may carry across origins, defined as a mechanism, not an intent.
-If the SOP cannot be preserved mechanically, it is a blocking architectural problem.
-Aligned with the same concern, agents are commonly given access to personalisation data, history, and inferred attributes.
-A site might obtain those by asking the agent for them in a JSON schema rather than by triggering a browser permission prompt or something that would commonly require a user gesture (e.g., filling a form from contact data).
-Agentic browsing risks re-opening cross-context data flows that the platform is intentionally closing.
+This is the cross-origin manifestation of the concern described in [[#lethal-trifecta]].
+
+The [=same origin|same origin policy=] (SOP) is a deterministic boundary.
+An agent that carries state derived from origin A into an interaction with origin B can defeat that boundary, and a cross-origin data path mediated by a model's disposition to refuse would invert the web's security model.
+For the *declarative*, in-page case, this risk is no longer merely deferred.
+
+[[WEBMCP]] specifies a two-sided, mechanical opt-in: a tool is same-origin-only by default; cross-origin exposure requires the embedding document to delegate the `tools` permissions-policy feature, 
+the providing document to list caller origins in `exposedTo`, and the consuming document to list provider origins in `fromOrigins`.
+
+The Finding welcomes this as the kind of browser-enforced mechanism that the SOP calls for, rather than an intent.
+The gap that remains is *agent-mediated cross-origin state transfer* [[WEBMCP]]. This gap is acknowledged as a residual risk in WebMCP.
+When a browser-integrated agent works across several origins in one task, nothing mechanical prevents it from passing data obtained from origin A as arguments to a tool on origin B, 
+or from letting origin A's content influence its later actions on origin B.
+WebMCP is explicit that preventing this is primarily the responsibility of the agent's own security model rather than something that specification can normatively enforce.
+For that agent-mediated case, the TAG suggests specifying a browser-enforced partition on the context an agent may carry across origins, defined as a mechanism rather than an intent.
+If the SOP cannot be preserved mechanically once an agent is in the loop, that is a blocking architectural problem.
+
+A related path is over-parameterisation: agents are commonly given access to personalisation data, history, and inferred attributes, 
+and a site can obtain these by asking the agent for them in a tool's input schema rather than by triggering a browser permission prompt or an action that would normally require a user gesture [[WEBMCP]].
+Agentic browsing thereby risks re-opening cross-context data flows that the platform is otherwise intentionally closing.
 
 Identity Delegation and Ambient Authority {#identity-delegation}
 ================================================================
@@ -145,17 +160,31 @@ Two structural gaps need to be clarified:
 	Given identity inheritance and extended user context, nothing mechanical stops an agent invoked in a private tab from drawing on the main profile's history to satisfy a tool call or vice versa.
 	One solution could be to specify a partitioned agent context for private-browsing sessions with defined memory lifetime and a hard bar on drawing main-profile context, plus a normative statement that the browsing mode cannot be inferred through any API.
 
-Agent Scope and the Confused Deputy Problem {#agent-scope}
+Agent Scope and the Confused Deputy Problem {#confused-deputy}
 ==========================================================
 
-The agent definition is not clearly scoped.
-The agent seems to be a confused deputy: it owns the user's ambient authority (credentials, session, cross-site context) while taking instructions from untrusted parties (tool descriptions and names, tool output, page content).
-The mitigations for a confused deputy (scope authority to explicit capabilities instead of ambient identity, and keep the instruction channel separate from the data channel) cannot be provided by an LLM, because it collapses instructions and data into one token stream.
-The core problem here is about where authority sits.
-Guardrails such as evaluation corpora do not seem to be sufficient to fix it.
-Also, agents are commonly defined as autonomous assistants that can <a spec="webmcp" lt="agent">"understand a user's goals and take actions"</a> [[WEBMCP]]. A security and privacy analysis that rests on the behaviour of an entity that a specification cannot constrain or characterise is under-determined.
-Either narrow what a conforming agent may do (capabilities, isolation obligations), or accept that any security and privacy guarantees are advisory.
-Right now, they read as the latter while being presented as the former.
+This is the authority-misuse manifestation of the concern in [[#lethal-trifecta]], and it is distinct from [[#identity-delegation]]: 
+that section asks whether authority was well-formed in the first place, whereas this one assumes some authority exists and asks how untrusted input can cause its misuse.
+
+The term "agent" is used broadly. [[WEBMCP]], for instance, defines an agent as an autonomous assistant that can <a spec="webmcp" lt="agent">"understand a user's goals and take actions"</a> [[WEBMCP]] on the user's behalf.
+When we say the definition is "not clearly scoped", we mean that the capabilities, authority, and isolation obligations of a *conforming* agent are left unconstrained.
+A security and privacy analysis that rests on the behaviour of an entity a specification does not constrain is under-determined, so a specification should either narrow what a conforming agent may do, 
+i.e. explicit capabilities and isolation obligations, or state plainly that its guarantees are advisory rather than enforceable.
+
+On that reading, the agent is a confused deputy: it wields the user's ambient authority (credentials, session, cross-site context) while taking instructions from untrusted parties (tool names and descriptions, tool output, 
+and page content) [[HARDY-CONFUSED-DEPUTY]].
+The classic mitigation for a confused deputy is to replace ambient authority with explicit capabilities, binding the designation of a resource to the authority to use it, 
+so that a deputy can only ever exercise authority deliberately handed to it rather than authority it holds by virtue of who it is; this is the argument of the paper that named the problem [[HARDY-CONFUSED-DEPUTY]].
+
+The adaptation specific to LLM-based agents additionally separates the instruction (control) channel from the data channel, 
+so that untrusted data cannot alter the program's control flow or authorise new actions; this is the approach taken by CaMeL, 
+which combines control-and-data-flow separation with capability-scoped checks at each tool call [[CAMEL]].
+Neither mitigation can be provided by the model's disposition alone, because an LLM collapses instructions and data into a single token stream.
+Guardrails such as evaluation corpora may reduce the likelihood of misuse, but they do not relocate where authority sits, which is the root of the problem.
+
+Specifications should therefore identify which security properties are guaranteed by enforceable mechanisms and which depend on model behaviour, 
+and should make the latter's limitations explicit rather than presenting behavioural expectations as enforceable guarantees.
+
 
 Alignment and Model Reliability {#model-reliability}
 ====================================================

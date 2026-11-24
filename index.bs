@@ -66,29 +66,35 @@ Agentic browsing improves the user experience, but it also raises security and p
 Agentic Browsers Exhibit the Lethal Trifecta {#lethal-trifecta}
 ===============================================================
 
-Simon Willison coined the term "Lethal Trifecta" [[LETHAL-TRIFECTA]], the combination of:
+Security researcher Simon Willison has popularised the term "lethal trifecta" [[LETHAL-TRIFECTA]] as a shorthand for three properties that, in combination, make an agent dangerous to the user it acts for:
 
-1. Access to private data
-1. The ability to externally communicate
-1. The exposure to untrusted content
+* **Access to private data:** autofill data, login details, and any agent-provided memory about the user.
+* **The ability to communicate externally:** submitting forms, sending HTTP requests, or using agent-mediated channels such as connected Model Context Protocol (MCP) servers (for example, to send email).
+* **Exposure to untrusted content:** web content is untrusted by default.
 
-Willison concluded that for users to stay safe, the Lethal Trifecta must be avoided entirely.
+The "lethal trifecta" is an informal, practitioner framing rather than a standardised or peer-reviewed result, and this Finding uses it only as a communicative lens.
 
-Agentic browsers, while potentially useful, exhibit the Lethal Trifecta:
+The architectural issue it addresses is not grounded in that framework as a foundational principle.
+Instead, tt rests on established web-platform foundations, in particular the [=same origin|same origin policy=] and the [[PRIVACY-PRINCIPLES]], 
+and on well-understood security concepts such as the confused deputy problem [[HARDY-CONFUSED-DEPUTY]] and prompt injection, each cited where it is used below.
+Willison's own conclusion is that, to stay safe, the combination should be avoided entirely.
 
-1. Agentic browsers have access to autofill data, login details, and potentially additional agent-provided memory about the user.
-1. Agentic browsers can submit forms, send HTTP requests, or use agent-mediated communication methods such as connected Model Context Protocol (MCP) servers (e.g., to send emails).
-1. Web content is untrusted by default.
+Agentic browsers, however, routinely exhibit all three properties at once.
 
-We suspect that authors and proponents of agentic browsers are using a form of informal "ceremony" analysis [[CEREMONY]] to conclude that, because human users aren't safe either (e.g., users also break the Same-Origin Policy), agents can be "safe enough."
-We strongly encourage those actors to formalize, quantify, and publish that analysis.
+We suspect that some authors and proponents of agentic browsers are relying on an informal "ceremony" analysis [[CEREMONY]], reasoning that, 
+because human users are not perfectly safe either (users, too, can be fooled into defeating the [same origin policy]), agents can be "safe enough". 
+We strongly encourage those actors to formalise, quantify, and publish that analysis. 
+This section states the core data-exfiltration concern once.
+
+The sections that follow do not restate it; instead they examine two specific architectural manifestations of it: cross-origin data flows (see [[#cross-origin]]) and the misuse of delegated authority (see [[#confused-deputy]]).
+
 
 <div class="example" id="attack-vector">
-A malicious website could claim to be the user's bank, and request all the personally identifiable information (PII) about the user to be entered into a form, and then sent to an attacker.
+As a concrete illustration, a malicious website could impersonate the user's bank, prompt the agent to enter all of the user's personally identifiable information (PII) into a form, and then forward it to an attacker.
 </div>
 
 
-Same-Origin Policy and Cross-Origin Data Flows {#same-origin-policy}
+Same-Origin Policy and Cross-Origin Data Flows {#cross-origin}
 ====================================================================
 
 There is ambiguity on the enforcement of Same-Origin Policy (SOP).

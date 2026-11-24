@@ -39,7 +39,14 @@ Boilerplate: conformance no
 		"date": "2007",
 		"publisher": "IACR Cryptology ePrint Archive, Report 2007/399",
 		"href": "https://eprint.iacr.org/2007/399.pdf"
-	}
+	},
+"HARDY-CONFUSED-DEPUTY": {
+    "authors": ["Norm Hardy"],
+    "title": "The Confused Deputy (or why capabilities might have been invented)",
+    "publisher": "ACM SIGOPS Operating Systems Review, 22(4), 36–38",
+    "date": "October 1988",
+    "href": "https://www.cs.utexas.edu/~witchel/380L/papers/hardy88confused.pdf"
+  }
 }
 </pre>
 
